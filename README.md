@@ -6,4 +6,4 @@ This is correctly configured for the board and includes the Arduino library as a
 
 The example project is taken from the UM3 Arduino library example and wheels the colour on the onboard RGB.
 
-As of 17/7/2026 the Arduino as component supports v5.5 of the ESP-IDF.
+As of 17/7/2026 the Arduino as component supports v5.5 of the ESP-IDF.  The library has been trimmed down and excludes a lot of dependencies that I do not use.
