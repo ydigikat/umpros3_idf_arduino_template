@@ -2,16 +2,26 @@
     "configurations": [
         {
             "name": "Linux",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "~/.espressif/v5.5.4/esp-idf/components/**"
-            ],
-            "defines": [],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
             "cppStandard": "c++14",
-            "intelliSenseMode": "linux-clang-x64"
-        }
+            "intelliSenseMode": "linux-clang-x64",
+            "mergeConfigurations": false,
+            "recursiveIncludes": {},
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "${default}",
+                "${workspaceFolder}/components/**"                
+            ],
+            "compileCommands": [
+                "${workspaceFolder}/build/compile_commands.json"
+            ],
+            "defines": [
+                "ARDUINO_PROS3"
+            ]
+        }        
     ],
     "version": 4
 }

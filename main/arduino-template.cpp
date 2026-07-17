@@ -3,31 +3,59 @@
 // Template for using ESP32 UM-PROS3 with IDF + Arduino as component.
 // ----------------------------------------------------------------------------
 
-#define ARDUINO_PROS3       // Not set apparently by variant.
+/* 
+* Need to tell the UM3 helper which board we're using, setting the um_pros3 
+* variant in config doesn't seem to do this.
+*/
+#ifndef ARDUINO_PROS3
+#define ARDUINO_PROS3
+#endif
+
+#include <stdint.h>
+
+#include "esp_log.h"
 #include "um3.h"
 
-UMS3 ums3;
+static const char *TAG="arduino-template";
+static void do_arduino_colour_wheel(void);
 
+/*
+* ESP-IDF code.
+*/
 extern "C" void app_main(void)
 {
+    ESP_LOGI(TAG,"ESP32 Arduino as Component template running.");
+
+    do_arduino_colour_wheel();
+    
+    /* NOTREACHED*/
+}
+
+
+/*
+* Arduino code in here.  This code blocks (superloop).
+*/
+void do_arduino_colour_wheel(void)
+{
+    UMS3 ums3;
+
     initArduino();
 
+    Serial.begin(115200);
+    Serial.println("ESP32 Arduino as Component template running.");    
+
     ums3.begin();
-
-    // Brightness is 0-255. We set it to 1/3 brightness here
-    ums3.setPixelBrightness(255 / 3);
-
-    // Enable the power to the RGB LED.
-    // Off by default so it doesn't use current when the LED is not required.
+    ums3.setPixelBrightness(255 / 3);    
     ums3.setPixelPower(true);
 
-    int color = 0;
+    uint color = 0;
 
     while (1)
-    {
-        // colorWheel cycles red, orange, ..., back to red at 256
+    {        
         ums3.setPixelColor(UMS3::colorWheel(color));
-        color++;
+        color++;    
         delay(30);
     }
+
+    /*NOTREACHED*/
 }
